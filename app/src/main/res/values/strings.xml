@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PixelCraft Studio</string>
+    <string name="app_tagline">100% Offline Pro Creative Suite</string>
+    <string name="search_placeholder">Search studios or projects…</string>
+    <string name="creative_studios">Creative Studios</string>
+    <string name="recent_projects">Recent Projects</string>
+    <string name="no_recent_projects">No saved projects yet. Start creating in Design Studio or Photo Editor!</string>
+    <string name="coming_soon">Coming Soon</string>
+    <string name="phase_2_notice">%1$s will be unlocked in Phase 2.</string>
+
+    <!-- 6 Hubs -->
+    <string name="hub_design_title">Professional Design Studio</string>
+    <string name="hub_design_desc">Multi-layer canvas, typography &amp; vector tools</string>
+    <string name="hub_photo_title">Pro Photo Editor</string>
+    <string name="hub_photo_desc">Color adjustments, filters, crop &amp; rotate</string>
+    <string name="hub_logo_title">Logo &amp; Brand Studio</string>
+    <string name="hub_logo_desc">Vector shapes, brand kits &amp; transparent export</string>
+    <string name="hub_social_title">Social &amp; Ads Studio</string>
+    <string name="hub_social_desc">Editable templates for Instagram, YouTube &amp; more</string>
+    <string name="hub_product_title">Product &amp; Mockup Studio</string>
+    <string name="hub_product_desc">Local background removal, shadows &amp; staging</string>
+    <string name="hub_utils_title">Quick Image Utilities</string>
+    <string name="hub_utils_desc">Resize, compress, convert, QR &amp; color palette</string>
+
+    <!-- Settings & Dialogs -->
+    <string name="toggle_theme">Toggle Theme</string>
+    <string name="toggle_language">العربية</string>
+    <string name="new_project">New Canvas</string>
+    <string name="project_name">Project Name</string>
+    <string name="untitled_project">Untitled Design</string>
+    <string name="preset_square">Instagram Square (1080×1080)</string>
+    <string name="preset_story">Story / Reels (1080×1920)</string>
+    <string name="preset_landscape">YouTube HD (1920×1080)</string>
+    <string name="preset_transparent">Transparent Square (1080×1080)</string>
+    <string name="preset_custom">Custom Size</string>
+    <string name="width_px">Width (px)</string>
+    <string name="height_px">Height (px)</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="confirm_delete">Delete Project?</string>
+    <string name="confirm_delete_msg">This will permanently remove the project and its local assets.</string>
+
+    <!-- Editor Workspace -->
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
+    <string name="save">Save</string>
+    <string name="export">Export</string>
+    <string name="zoom_fit">Fit</string>
+    <string name="saved_toast">Project saved locally</string>
+    <string name="tool_add_image">Image</string>
+    <string name="tool_add_text">Text</string>
+    <string name="tool_add_shape">Shape</string>
+    <string name="tool_layers">Layers</string>
+    <string name="tool_adjust">Adjust</string>
+    <string name="tool_transform">Transform</string>
+    <string name="tool_canvas">Canvas</string>
+
+    <!-- Layers -->
+    <string name="layers_title">Layers (%1$d)</string>
+    <string name="no_layers">Tap Image, Text, or Shape below to add a layer.</string>
+    <string name="opacity">Opacity</string>
+    <string name="move_up">Bring Forward</string>
+    <string name="move_down">Send Backward</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="lock">Lock</string>
+    <string name="visibility">Visibility</string>
+
+    <!-- Adjustments -->
+    <string name="select_image_layer_hint">Select an Image layer to adjust colors or crop.</string>
+    <string name="brightness">Brightness</string>
+    <string name="contrast">Contrast</string>
+    <string name="saturation">Saturation</string>
+    <string name="temperature">Temperature</string>
+    <string name="bw_filter">B&amp;W Filter</string>
+    <string name="reset_adjustments">Reset Filters</string>
+
+    <!-- Transform & Crop -->
+    <string name="rotate_left">Rotate -90°</string>
+    <string name="rotate_right">Rotate +90°</string>
+    <string name="flip_h">Flip H</string>
+    <string name="flip_v">Flip V</string>
+    <string name="free_rotation">Rotation</string>
+    <string name="crop_presets">Crop Aspect</string>
+    <string name="crop_original">Original</string>
+    <string name="crop_square">1:1</string>
+    <string name="crop_portrait">4:5</string>
+    <string name="crop_wide">16:9</string>
+
+    <!-- Text & Shapes -->
+    <string name="add_edit_text">Text Layer</string>
+    <string name="enter_text">Enter Arabic or English text…</string>
+    <string name="font_size">Size</string>
+    <string name="font_weight">Weight</string>
+    <string name="text_color">Color</string>
+    <string name="text_shadow">Drop Shadow</string>
+    <string name="shape_rect">Rectangle</string>
+    <string name="shape_rounded">Rounded</string>
+    <string name="shape_circle">Circle</string>
+    <string name="shape_line">Line</string>
+    <string name="fill_color">Fill Color</string>
+    <string name="stroke_width">Stroke</string>
+    <string name="canvas_bg">Canvas Background</string>
+    <string name="transparent">Transparent</string>
+
+    <!-- Export -->
+    <string name="export_title">Export High-Res Artwork</string>
+    <string name="export_format">Format</string>
+    <string name="export_quality">Quality</string>
+    <string name="export_now">Export to Gallery</string>
+    <string name="exporting">Rendering full resolution…</string>
+    <string name="export_success">Saved to Pictures/PixelCraft Studio</string>
+    <string name="export_error">Export failed: %1$s</string>
+    <string name="done">Done</string>
+</resources>
