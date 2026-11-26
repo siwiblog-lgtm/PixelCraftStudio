@@ -63,6 +63,7 @@
     <string name="tool_add_image">Image</string>
     <string name="tool_add_text">Text</string>
     <string name="tool_add_shape">Shape</string>
+    <string name="tool_circle">Circle</string>
     <string name="tool_layers">Layers</string>
     <string name="tool_adjust">Adjust</string>
     <string name="tool_transform">Transform</string>
