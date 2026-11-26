@@ -24,6 +24,13 @@
     <string name="hub_utils_desc">Resize, compress, convert, QR &amp; color palette</string>
 
     <!-- Settings & Dialogs -->
+    <string name="settings_title">Settings</string>
+    <string name="language_section">Language &amp; Layout</string>
+    <string name="lang_arabic">العربية</string>
+    <string name="lang_english">English</string>
+    <string name="force_rtl">Force RTL Layout</string>
+    <string name="export_section">Export Defaults</string>
+    <string name="export_quality_label">Default Export Quality</string>
     <string name="toggle_theme">Toggle Theme</string>
     <string name="toggle_language">العربية</string>
     <string name="new_project">New Canvas</string>
