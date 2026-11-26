@@ -29,7 +29,7 @@ class AdManager(private val context: Context) {
     fun createBannerView(adSize: AdSize = AdSize.BANNER): AdView {
         return AdView(context).apply {
             setAdSize(adSize)
-            adUnitId = AdConfig.bannerAdUnitId
+            adUnitId = AdConfig.bannerUnitId
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
@@ -44,7 +44,7 @@ class AdManager(private val context: Context) {
 
         InterstitialAd.load(
             context.applicationContext,
-            AdConfig.interstitialAdUnitId,
+            AdConfig.interstitialUnitId,
             AdRequest.Builder().build(),
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
