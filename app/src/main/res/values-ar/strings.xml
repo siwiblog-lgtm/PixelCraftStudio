@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">بيكسل كرافت ستوديو</string>
+    <string name="app_tagline">استوديو تصميم احترافي يعمل بدون إنترنت 100%</string>
+    <string name="search_placeholder">ابحث في الاستوديوهات أو المشاريع…</string>
+    <string name="creative_studios">الاستوديوهات الإبداعية</string>
+    <string name="recent_projects">المشاريع الأخيرة</string>
+    <string name="no_recent_projects">لا توجد مشاريع محفوظة بعد. ابدأ الإبداع في استوديو التصميم أو محرر الصور!</string>
+    <string name="coming_soon">قريباً</string>
+    <string name="phase_2_notice">سيتم تفعيل %1$s في المرحلة الثانية.</string>
+
+    <!-- 6 Hubs -->
+    <string name="hub_design_title">استوديو التصميم الاحترافي</string>
+    <string name="hub_design_desc">مساحة عمل متعددة الطبقات، خطوط وأشكال متجهة</string>
+    <string name="hub_photo_title">محرر الصور الاحترافي</string>
+    <string name="hub_photo_desc">تعديل الألوان، الفلاتر، القص والتدوير</string>
+    <string name="hub_logo_title">استوديو الشعارات والهوية</string>
+    <string name="hub_logo_desc">أشكال متجهة، خطوط احترافية وتصدير شفاف</string>
+    <string name="hub_social_title">استوديو السوشيال والإعلانات</string>
+    <string name="hub_social_desc">قوالب قابلة للتعديل لإنستغرام وفيسبوك ويوتيوب</string>
+    <string name="hub_product_title">استوديو المنتجات والموكاب</string>
+    <string name="hub_product_desc">إزالة الخلفية محلياً، ظلال وعرض احترافي</string>
+    <string name="hub_utils_title">أدوات الصور السريعة</string>
+    <string name="hub_utils_desc">تغيير الحجم، الضغط، التحويل، QR واستخراج الألوان</string>
+
+    <!-- Settings & Dialogs -->
+    <string name="toggle_theme">تبديل المظهر</string>
+    <string name="toggle_language">English</string>
+    <string name="new_project">لوحة عمل جديدة</string>
+    <string name="project_name">اسم المشروع</string>
+    <string name="untitled_project">تصميم جديد</string>
+    <string name="preset_square">مربع إنستغرام (1080×1080)</string>
+    <string name="preset_story">ستوري / ريلز (1080×1920)</string>
+    <string name="preset_landscape">يوتيوب HD (1920×1080)</string>
+    <string name="preset_transparent">مربع شفاف (1080×1080)</string>
+    <string name="preset_custom">مقاس مخصص</string>
+    <string name="width_px">العرض (بكسل)</string>
+    <string name="height_px">الارتفاع (بكسل)</string>
+    <string name="create">إنشاء</string>
+    <string name="cancel">إلغاء</string>
+    <string name="delete">حذف</string>
+    <string name="confirm_delete">حذف المشروع؟</string>
+    <string name="confirm_delete_msg">سيتم حذف المشروع وملفاته المحلية نهائياً.</string>
+
+    <!-- Editor Workspace -->
+    <string name="undo">تراجع</string>
+    <string name="redo">إعادة</string>
+    <string name="save">حفظ</string>
+    <string name="export">تصدير</string>
+    <string name="zoom_fit">ملاءمة</string>
+    <string name="saved_toast">تم حفظ المشروع محلياً</string>
+    <string name="tool_add_image">صورة</string>
+    <string name="tool_add_text">نص</string>
+    <string name="tool_add_shape">شكل</string>
+    <string name="tool_layers">الطبقات</string>
+    <string name="tool_adjust">الألوان</string>
+    <string name="tool_transform">تحويل</string>
+    <string name="tool_canvas">اللوحة</string>
+
+    <!-- Layers -->
+    <string name="layers_title">الطبقات (%1$d)</string>
+    <string name="no_layers">اضغط على صورة أو نص أو شكل لإضافة طبقة.</string>
+    <string name="opacity">الشفافية</string>
+    <string name="move_up">تقديم للأمام</string>
+    <string name="move_down">إرجاع للخلف</string>
+    <string name="duplicate">تكرار</string>
+    <string name="lock">قفل</string>
+    <string name="visibility">إظهار/إخفاء</string>
+
+    <!-- Adjustments -->
+    <string name="select_image_layer_hint">اختر طبقة صورة لتعديل الألوان أو القص.</string>
+    <string name="brightness">السطوع</string>
+    <string name="contrast">التباين</string>
+    <string name="saturation">التشبع</string>
+    <string name="temperature">الحرارة</string>
+    <string name="bw_filter">أبيض وأسود</string>
+    <string name="reset_adjustments">إعادة ضبط</string>
+
+    <!-- Transform & Crop -->
+    <string name="rotate_left">تدوير -90°</string>
+    <string name="rotate_right">تدوير +90°</string>
+    <string name="flip_h">قلب أفقي</string>
+    <string name="flip_v">قلب رأسي</string>
+    <string name="free_rotation">زاوية الدوران</string>
+    <string name="crop_presets">نسبة القص</string>
+    <string name="crop_original">الأصل</string>
+    <string name="crop_square">1:1</string>
+    <string name="crop_portrait">4:5</string>
+    <string name="crop_wide">16:9</string>
+
+    <!-- Text & Shapes -->
+    <string name="add_edit_text">طبقة نص</string>
+    <string name="enter_text">اكتب نصاً بالعربية أو الإنجليزية…</string>
+    <string name="font_size">الحجم</string>
+    <string name="font_weight">السُمك</string>
+    <string name="text_color">اللون</string>
+    <string name="text_shadow">ظل للنص</string>
+    <string name="shape_rect">مستطيل</string>
+    <string name="shape_rounded">دائري الحواف</string>
+    <string name="shape_circle">دائرة</string>
+    <string name="shape_line">خط</string>
+    <string name="fill_color">لون التعبئة</string>
+    <string name="stroke_width">سمك الإطار</string>
+    <string name="canvas_bg">خلفية اللوحة</string>
+    <string name="transparent">شفاف</string>
+
+    <!-- Export -->
+    <string name="export_title">تصدير بجودة عالية</string>
+    <string name="export_format">الصيغة</string>
+    <string name="export_quality">الجودة</string>
+    <string name="export_now">تصدير للمعرض</string>
+    <string name="exporting">جارٍ المعالجة بالدقة الكاملة…</string>
+    <string name="export_success">تم الحفظ في Pictures/PixelCraft Studio</string>
+    <string name="export_error">فشل التصدير: %1$s</string>
+    <string name="done">تم</string>
+</resources>
