@@ -125,4 +125,30 @@
     <string name="export_success">Saved to Pictures/PixelCraft Studio</string>
     <string name="export_error">Export failed: %1$s</string>
     <string name="done">Done</string>
+
+    <!-- Added: strings used by EditorScreen/HomeScreen -->
+    <string name="default_project_title">Pixel Art</string>
+    <string name="error_generic">An unexpected error occurred</string>
+    <string name="new_canvas">New Canvas</string>
+    <string name="import_image">Import Image</string>
+    <string name="templates_title">Ready Templates</string>
+    <string name="saved_projects">Saved Projects</string>
+    <string name="no_saved_projects">No locally saved projects yet.</string>
+    <string name="canvas_size">Canvas Size</string>
+    <string name="template_heart">Heart</string>
+    <string name="template_sun">Sun</string>
+    <string name="template_gem">Gem</string>
+    <string name="save_project">Save Project</string>
+    <string name="saved_locally">Project saved locally</string>
+    <string name="exported_to_gallery">Image exported to gallery: %1$s</string>
+    <string name="toggle_grid">Show or hide grid</string>
+    <string name="rotate_90">Rotate 90°</string>
+    <string name="flip_horizontal">Flip Horizontal</string>
+    <string name="fill_shape">Fill Shape</string>
+    <string name="tool_pen">Pen</string>
+    <string name="tool_eraser">Eraser</string>
+    <string name="tool_fill">Fill</string>
+    <string name="tool_eyedropper">Eyedropper</string>
+    <string name="tool_line">Line</string>
+    <string name="tool_rect">Rectangle</string>
 </resources>
