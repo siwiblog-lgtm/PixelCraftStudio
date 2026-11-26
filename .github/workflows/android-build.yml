@@ -22,15 +22,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Generate Gradle Wrapper if missing
+      - name: Configure Android SDK path
         run: |
-          if [ ! -f gradlew ]; then
-            gradle wrapper --gradle-version 8.7 --distribution-type bin
+          if [ ! -f local.properties ] && [ -n "$ANDROID_HOME" ]; then
+            echo "sdk.dir=$ANDROID_HOME" > local.properties
           fi
-          chmod +x gradlew
 
       - name: Assemble Debug APK
-        run: ./gradlew assembleDebug
+        run: gradle assembleDebug --stacktrace
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
