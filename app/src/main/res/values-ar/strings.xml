@@ -113,4 +113,31 @@
     <string name="export_success">تم الحفظ في Pictures/PixelCraft Studio</string>
     <string name="export_error">فشل التصدير: %1$s</string>
     <string name="done">تم</string>
+
+    <!-- Added: strings used by EditorScreen/HomeScreen -->
+    <string name="default_project_title">رسم بكسل</string>
+    <string name="error_generic">حدث خطأ غير متوقع</string>
+    <string name="new_canvas">لوحة جديدة</string>
+    <string name="import_image">استيراد صورة</string>
+    <string name="templates_title">قوالب جاهزة</string>
+    <string name="saved_projects">المشاريع المحفوظة</string>
+    <string name="no_saved_projects">لا توجد مشاريع محفوظة محليًا بعد.</string>
+    <string name="canvas_size">مقاس اللوحة</string>
+    <string name="template_heart">قلب</string>
+    <string name="template_sun">شمس</string>
+    <string name="template_gem">جوهرة</string>
+    <string name="save_project">حفظ المشروع</string>
+    <string name="saved_locally">تم حفظ المشروع محليًا</string>
+    <string name="exported_to_gallery">تم تصدير الصورة إلى المعرض: %1$s</string>
+    <string name="toggle_grid">إظهار أو إخفاء الشبكة</string>
+    <string name="rotate_90">تدوير 90 درجة</string>
+    <string name="flip_horizontal">قلب أفقي</string>
+    <string name="fill_shape">تعبئة الشكل</string>
+    <string name="tool_pen">قلم</string>
+    <string name="tool_eraser">ممحاة</string>
+    <string name="tool_fill">تعبئة</string>
+    <string name="tool_eyedropper">قطارة</string>
+    <string name="tool_line">خط</string>
+    <string name="tool_rect">مستطيل</string>
+    <string name="tool_circle">دائرة</string>
 </resources>
