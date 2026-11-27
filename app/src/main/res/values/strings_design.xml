@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="design_studio_title">Design Studio</string>
+    <string name="design_studio_entry">Design Studio</string>
+    <string name="design_default_text">Your text</string>
+    <string name="design_hint">Tap a layer to select • Drag to move • Two fingers to scale and rotate</string>
+    <string name="design_edit_text">Edit text</string>
+    <string name="design_bg_white">White</string>
+    <string name="design_bg_black">Black</string>
+</resources>
