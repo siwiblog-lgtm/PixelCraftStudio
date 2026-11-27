@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="photo_editor_title">محرر الصور</string>
+    <string name="photo_editor_entry">تعديل صورة</string>
+    <string name="photo_pick_prompt">اختر صورة لبدء التعديل</string>
+    <string name="photo_pick_button">اختيار صورة</string>
+    <string name="photo_tab_adjust">الألوان</string>
+    <string name="photo_tab_transform">تحويل</string>
+    <string name="photo_tab_crop">قص</string>
+    <string name="photo_hold_compare">اضغط مطولاً على الصورة لمقارنتها بالأصل</string>
+    <string name="photo_load_error">تعذر فتح هذه الصورة</string>
+    <string name="photo_save_title">حفظ الصورة</string>
+    <string name="photo_save_button">حفظ</string>
+</resources>
