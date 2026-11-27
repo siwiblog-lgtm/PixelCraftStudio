@@ -7,7 +7,7 @@
     <string name="photo_tab_adjust">Adjust</string>
     <string name="photo_tab_transform">Transform</string>
     <string name="photo_tab_crop">Crop</string>
-    <string name="photo_hold_compare">Press and hold the photo to compare with the original</string>
+    <string name="photo_hold_compare">Hold to compare • Pinch to zoom • Double-tap to reset</string>
     <string name="photo_load_error">Could not open this photo</string>
     <string name="photo_save_title">Save Photo</string>
     <string name="photo_save_button">Save</string>
