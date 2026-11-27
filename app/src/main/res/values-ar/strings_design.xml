@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="design_studio_title">استوديو التصميم</string>
+    <string name="design_studio_entry">استوديو التصميم</string>
+    <string name="design_default_text">نصك هنا</string>
+    <string name="design_hint">المس عنصراً لتحديده • اسحب لتحريكه • بإصبعين للتكبير والتدوير</string>
+    <string name="design_edit_text">تعديل النص</string>
+    <string name="design_bg_white">أبيض</string>
+    <string name="design_bg_black">أسود</string>
+</resources>
