@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import java.io.IOException
 import kotlin.math.max
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 enum class ExportFormat(
     val mimeType: String,
@@ -32,6 +33,12 @@ object PhotoIO {
     /** Longest side of the small bitmap used for on-screen previews. */
     const val PREVIEW_MAX_SIDE = 1280
 
+    /**
+     * Rendering needs roughly three copies of the photo (decoded, rotated,
+     * output). 24 bytes per pixel of heap budget keeps a safe margin.
+     */
+    private const val EXPORT_HEAP_BYTES_PER_PIXEL = 24L
+
     fun load(resolver: ContentResolver, uri: Uri, maxSide: Int = EDIT_MAX_SIDE): Bitmap {
         val source = ImageDecoder.createSource(resolver, uri)
         return ImageDecoder.decodeBitmap(source) { decoder, info, _ ->
@@ -39,6 +46,27 @@ object PhotoIO {
             val longest = max(info.size.width, info.size.height)
             if (longest > maxSide) {
                 val scale = maxSide.toFloat() / longest
+                decoder.setTargetSize(
+                    (info.size.width * scale).roundToInt().coerceAtLeast(1),
+                    (info.size.height * scale).roundToInt().coerceAtLeast(1)
+                )
+            }
+        }
+    }
+
+    /**
+     * Decodes the original photo for export at the largest size the device
+     * memory can safely handle. Photos are never upscaled.
+     */
+    fun loadForExport(resolver: ContentResolver, uri: Uri): Bitmap {
+        val maxPixels = (Runtime.getRuntime().maxMemory() / EXPORT_HEAP_BYTES_PER_PIXEL)
+            .coerceAtLeast(1_000_000L)
+        val source = ImageDecoder.createSource(resolver, uri)
+        return ImageDecoder.decodeBitmap(source) { decoder, info, _ ->
+            decoder.allocator = ImageDecoder.ALLOCATOR_SOFTWARE
+            val pixels = info.size.width.toLong() * info.size.height.toLong()
+            if (pixels > maxPixels) {
+                val scale = sqrt(maxPixels.toDouble() / pixels.toDouble())
                 decoder.setTargetSize(
                     (info.size.width * scale).roundToInt().coerceAtLeast(1),
                     (info.size.height * scale).roundToInt().coerceAtLeast(1)
