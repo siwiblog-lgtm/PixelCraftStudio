@@ -20,6 +20,7 @@ import com.pixelcraft.studio.core.datastore.SettingsDataStore
 import com.pixelcraft.studio.core.theme.PixelCraftTheme
 import com.pixelcraft.studio.data.LocalStorageManager
 import com.pixelcraft.studio.model.PixelCanvasDocument
+import com.pixelcraft.studio.photo.PhotoEditorScreen
 import com.pixelcraft.studio.ui.screens.EditorScreen
 import com.pixelcraft.studio.ui.screens.HomeScreen
 import com.pixelcraft.studio.ui.screens.SettingsScreen
@@ -28,6 +29,7 @@ import java.util.Locale
 private enum class AppRoute {
     HOME,
     EDITOR,
+    PHOTO,
     SETTINGS
 }
 
@@ -96,6 +98,9 @@ private fun PixelCraftApp(
                         },
                         onOpenSettings = {
                             currentRoute = AppRoute.SETTINGS
+                        },
+                        onOpenPhotoEditor = {
+                            currentRoute = AppRoute.PHOTO
                         }
                     )
                 }
@@ -117,6 +122,15 @@ private fun PixelCraftApp(
                     } else {
                         currentRoute = AppRoute.HOME
                     }
+                }
+
+                AppRoute.PHOTO -> {
+                    PhotoEditorScreen(
+                        isRtl = isRtl,
+                        onNavigateBack = {
+                            currentRoute = AppRoute.HOME
+                        }
+                    )
                 }
 
                 AppRoute.SETTINGS -> {
