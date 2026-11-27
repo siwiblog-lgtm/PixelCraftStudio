@@ -1,5 +1,6 @@
 package com.pixelcraft.studio.core.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -63,7 +64,7 @@ private val PixelCraftTypography = Typography(
 
 @Composable
 fun PixelCraftTheme(
-    darkTheme: Boolean,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
