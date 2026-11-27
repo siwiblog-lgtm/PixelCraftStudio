@@ -22,9 +22,11 @@ import java.util.Locale
  */
 class PhotoEditorViewModel : ViewModel() {
 
+    /** Working copy (up to 3072 px), used as a safe fallback for export. */
     var fullSource by mutableStateOf<Bitmap?>(null)
         private set
 
+    /** Small copy (up to 1280 px) used for fast on-screen previews. */
     var previewSource by mutableStateOf<Bitmap?>(null)
         private set
 
@@ -37,6 +39,7 @@ class PhotoEditorViewModel : ViewModel() {
     var isSaving by mutableStateOf(false)
         private set
 
+    private var sourceUri: Uri? = null
     private var historyVersion by mutableIntStateOf(0)
     private val history = EditHistory(PhotoEditState())
 
@@ -54,6 +57,7 @@ class PhotoEditorViewModel : ViewModel() {
                     val full = PhotoIO.load(resolver, uri)
                     full to PhotoIO.createPreview(full)
                 }
+                sourceUri = uri
                 fullSource = loaded.first
                 previewSource = loaded.second
                 history.reset(PhotoEditState())
@@ -96,28 +100,67 @@ class PhotoEditorViewModel : ViewModel() {
         historyVersion++
     }
 
+    /**
+     * Exports at the highest resolution memory allows. The original photo is
+     * decoded again for export; if that fails (permission lost or not enough
+     * memory) the 3072 px working copy is used instead.
+     */
     fun export(
         resolver: ContentResolver,
         format: ExportFormat,
         quality: Int,
         onResult: (Result<Uri>) -> Unit
     ) {
-        val source = fullSource ?: return
+        val working = fullSource ?: return
         val snapshot = state
+        val uri = sourceUri
+
         viewModelScope.launch {
             isSaving = true
             val result = withContext(Dispatchers.IO) {
                 runCatching {
-                    val rendered = PhotoRenderer.render(source, snapshot)
-                    try {
-                        PhotoIO.save(resolver, rendered, format, quality, fileName())
-                    } finally {
-                        rendered.recycle()
+                    var original: Bitmap? = null
+                    if (uri != null) {
+                        original = try {
+                            PhotoIO.loadForExport(resolver, uri)
+                        } catch (e: Exception) {
+                            null
+                        } catch (e: OutOfMemoryError) {
+                            null
+                        }
                     }
+
+                    var saved: Uri? = null
+                    if (original != null) {
+                        saved = try {
+                            renderAndSave(resolver, original, snapshot, format, quality)
+                        } catch (e: OutOfMemoryError) {
+                            null
+                        } finally {
+                            original.recycle()
+                        }
+                    }
+
+                    saved ?: renderAndSave(resolver, working, snapshot, format, quality)
                 }
             }
             isSaving = false
             onResult(result)
+        }
+    }
+
+    private fun renderAndSave(
+        resolver: ContentResolver,
+        input: Bitmap,
+        editState: PhotoEditState,
+        format: ExportFormat,
+        quality: Int
+    ): Uri {
+        val rendered = PhotoRenderer.render(input, editState)
+        try {
+            return PhotoIO.save(resolver, rendered, format, quality, fileName())
+        } finally {
+            rendered.recycle()
         }
     }
 
