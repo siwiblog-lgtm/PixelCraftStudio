@@ -131,13 +131,15 @@ class DesignEditorTest {
     fun gesture_withoutChange_addsNoHistory() {
         val editor = newEditor()
         editor.addLayer(shape("a"))
-        editor.undo()
-        editor.redo()
-        // Redo stack is empty now, only the "add" is in the undo stack.
+
+        // Begin and end a gesture without changing the layer.
         assertTrue(editor.beginGesture())
         editor.endGesture()
+
+        // Only the "add" is in history, so one undo empties it.
         assertTrue(editor.undo())
         assertFalse(editor.canUndo)
+        assertEquals(0, editor.document.layers.size)
     }
 
     @Test
