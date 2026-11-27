@@ -78,4 +78,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-ads:25.5.0")
 
     debugImplementation("androidx.compose.ui:ui-tooling")
+
+    // Unit tests (run on GitHub, no phone needed)
+    testImplementation("junit:junit:4.13.2")
 }
