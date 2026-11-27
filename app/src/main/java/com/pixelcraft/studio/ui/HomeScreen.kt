@@ -85,6 +85,7 @@ fun HomeScreen(
     isRtl: Boolean,
     onOpenDocument: (PixelCanvasDocument) -> Unit,
     onOpenSettings: () -> Unit,
+    onOpenPhotoEditor: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -163,6 +164,27 @@ fun HomeScreen(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                // Photo Editor entry
+                item {
+                    Button(
+                        onClick = onOpenPhotoEditor,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.AddPhotoAlternate,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.photo_editor_entry),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+
                 // Primary Actions: New Blank Canvas & Import Image
                 item {
                     Row(
