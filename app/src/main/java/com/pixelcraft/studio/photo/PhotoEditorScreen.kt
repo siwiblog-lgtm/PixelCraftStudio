@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -53,8 +54,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -69,6 +73,7 @@ import com.pixelcraft.studio.core.theme.StudioCanvasBackdrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
+import androidx.compose.ui.graphics.ColorMatrix as ComposeColorMatrix
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,6 +90,24 @@ fun PhotoEditorScreen(
     var showSaveDialog by remember { mutableStateOf(false) }
     var showOriginal by remember { mutableStateOf(false) }
     var preview by remember { mutableStateOf<ImageBitmap?>(null) }
+
+    // Geometry (rotate / flip / crop) is baked into a small bitmap. Colour
+    // adjustments are applied on the GPU by a ColorFilter, so dragging a
+    // slider never re-renders the bitmap.
+    val geometryState = remember(state) { state.copy(adjustments = PhotoAdjustments()) }
+    val colorFilter = remember(state.adjustments) {
+        if (state.adjustments.isDefault) {
+            null
+        } else {
+            ColorFilter.colorMatrix(
+                ComposeColorMatrix(state.adjustments.toColorMatrix().array)
+            )
+        }
+    }
+
+    // Zoom and pan are reset whenever the photo or its geometry changes.
+    var zoom by remember(previewSource, geometryState) { mutableFloatStateOf(1f) }
+    var offset by remember(previewSource, geometryState) { mutableStateOf(Offset.Zero) }
 
     val originalImage = remember(previewSource) { previewSource?.asImageBitmap() }
 
@@ -107,13 +130,12 @@ fun PhotoEditorScreen(
         )
     }
 
-    // Re-render the small preview whenever the edit state changes.
-    LaunchedEffect(state, previewSource) {
+    LaunchedEffect(geometryState, previewSource) {
         preview = if (previewSource == null) {
             null
         } else {
             withContext(Dispatchers.Default) {
-                PhotoRenderer.render(previewSource, state).asImageBitmap()
+                PhotoRenderer.render(previewSource, geometryState).asImageBitmap()
             }
         }
     }
@@ -173,14 +195,30 @@ fun PhotoEditorScreen(
                         .weight(1f)
                         .fillMaxWidth()
                         .background(StudioCanvasBackdrop)
-                        .pointerInput(Unit) {
+                        .pointerInput(previewSource, geometryState) {
                             detectTapGestures(
+                                onDoubleTap = {
+                                    zoom = 1f
+                                    offset = Offset.Zero
+                                },
                                 onPress = {
                                     showOriginal = true
                                     tryAwaitRelease()
                                     showOriginal = false
                                 }
                             )
+                        }
+                        .pointerInput(previewSource, geometryState) {
+                            detectTransformGestures { _, pan, gestureZoom, _ ->
+                                val newScale = (zoom * gestureZoom).coerceIn(1f, 8f)
+                                val maxX = size.width * (newScale - 1f) / 2f
+                                val maxY = size.height * (newScale - 1f) / 2f
+                                offset = Offset(
+                                    (offset.x + pan.x).coerceIn(-maxX, maxX),
+                                    (offset.y + pan.y).coerceIn(-maxY, maxY)
+                                )
+                                zoom = newScale
+                            }
                         },
                     contentAlignment = Alignment.Center
                 ) {
@@ -191,9 +229,16 @@ fun PhotoEditorScreen(
                             bitmap = shown,
                             contentDescription = null,
                             contentScale = ContentScale.Fit,
+                            colorFilter = if (showOriginal) null else colorFilter,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(8.dp)
+                                .graphicsLayer {
+                                    scaleX = zoom
+                                    scaleY = zoom
+                                    translationX = offset.x
+                                    translationY = offset.y
+                                }
                         )
                         else -> EmptyState(onPick = { pickPhoto() })
                     }
