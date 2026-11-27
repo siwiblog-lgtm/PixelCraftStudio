@@ -7,7 +7,7 @@
     <string name="photo_tab_adjust">الألوان</string>
     <string name="photo_tab_transform">تحويل</string>
     <string name="photo_tab_crop">قص</string>
-    <string name="photo_hold_compare">اضغط مطولاً على الصورة لمقارنتها بالأصل</string>
+    <string name="photo_hold_compare">اضغط مطولاً للمقارنة • قرصة للتكبير • نقرتان لإعادة الضبط</string>
     <string name="photo_load_error">تعذر فتح هذه الصورة</string>
     <string name="photo_save_title">حفظ الصورة</string>
     <string name="photo_save_button">حفظ</string>
