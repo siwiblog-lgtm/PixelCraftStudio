@@ -12,7 +12,11 @@ import androidx.lifecycle.viewModelScope
 import com.pixelcraft.studio.photo.ExportFormat
 import com.pixelcraft.studio.photo.PhotoIO
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -20,12 +24,10 @@ import java.util.Locale
 import java.util.UUID
 import kotlin.math.min
 
-/** Bridges the pure [DesignEditor] to Compose state. */
+/** Bridges the pure [DesignEditor] to Compose state and project storage. */
 class DesignViewModel : ViewModel() {
 
-    private val editor = DesignEditor(
-        DesignDocument(width = 1080, height = 1080, backgroundArgb = 0xFFFFFFFF.toInt())
-    )
+    private var editor = DesignEditor(blankDocument())
 
     var document by mutableStateOf(editor.document)
         private set
@@ -45,6 +47,9 @@ class DesignViewModel : ViewModel() {
     var isSaving by mutableStateOf(false)
         private set
 
+    var projectName by mutableStateOf(defaultName())
+        private set
+
     /** Decoded bitmaps of image layers, keyed by [LayerContent.Image.sourceId]. */
     val images = HashMap<String, Bitmap>()
 
@@ -55,11 +60,17 @@ class DesignViewModel : ViewModel() {
     private var layerCounter = 0
     private var editActive = false
 
-    private fun sync() {
+    private var store: DesignProjectStore? = null
+    private var projectId: String? = null
+    private var autosaveJob: Job? = null
+    private val saveMutex = Mutex()
+
+    private fun sync(autosave: Boolean = true) {
         document = editor.document
         selectedId = editor.selectedId
         canUndo = editor.canUndo
         canRedo = editor.canRedo
+        if (autosave) scheduleAutosave()
     }
 
     private fun newId(): String = UUID.randomUUID().toString()
@@ -67,6 +78,81 @@ class DesignViewModel : ViewModel() {
     private fun nextName(): String {
         layerCounter++
         return "Layer $layerCounter"
+    }
+
+    // ---- Projects ----
+
+    /**
+     * Opens a saved project, or starts a new blank one when [id] has no file.
+     * Calling it again with the same id (for example after rotation) does nothing.
+     */
+    fun openProject(projectStore: DesignProjectStore, id: String) {
+        store = projectStore
+        if (projectId == id) return
+        autosaveJob?.cancel()
+        projectId = id
+
+        viewModelScope.launch {
+            isLoading = true
+            val loaded = withContext(Dispatchers.IO) {
+                try {
+                    projectStore.load(id)
+                } catch (e: Exception) {
+                    null
+                } catch (e: OutOfMemoryError) {
+                    null
+                }
+            }
+
+            images.clear()
+            editActive = false
+            if (loaded != null) {
+                editor = DesignEditor(loaded.document)
+                images.putAll(loaded.images)
+                projectName = loaded.name
+                layerCounter = loaded.document.layers.size
+            } else {
+                editor = DesignEditor(blankDocument())
+                projectName = defaultName()
+                layerCounter = 0
+            }
+            sync(autosave = false)
+            isLoading = false
+        }
+    }
+
+    fun renameProject(newName: String) {
+        val clean = newName.trim().take(60)
+        if (clean.isNotEmpty() && clean != projectName) {
+            projectName = clean
+            scheduleAutosave()
+        }
+    }
+
+    /** Writes the project to disk now (call when the screen goes to background). */
+    fun saveNow() {
+        val id = projectId ?: return
+        val projectStore = store ?: return
+        val snapshot = editor.document
+        // Do not create files for projects the user never touched.
+        if (snapshot.layers.isEmpty() && !projectStore.exists(id)) return
+
+        val imageSnapshot = HashMap(images)
+        val name = projectName
+        viewModelScope.launch(Dispatchers.IO) {
+            saveMutex.withLock {
+                runCatching { projectStore.save(id, name, snapshot, imageSnapshot) }
+            }
+        }
+    }
+
+    private fun scheduleAutosave() {
+        if (projectId == null || store == null) return
+        autosaveJob?.cancel()
+        autosaveJob = viewModelScope.launch {
+            delay(AUTOSAVE_DELAY_MS)
+            saveNow()
+        }
     }
 
     // ---- Adding layers ----
@@ -152,7 +238,7 @@ class DesignViewModel : ViewModel() {
 
     fun select(id: String?) {
         editor.select(id)
-        sync()
+        sync(autosave = false)
     }
 
     // ---- Live edits (gestures and sliders): many updates, one undo step ----
@@ -296,5 +382,14 @@ class DesignViewModel : ViewModel() {
     private companion object {
         const val TEXT_PADDING = 24f
         const val IMAGE_MAX_SIDE = 2048
+        const val AUTOSAVE_DELAY_MS = 1500L
+
+        fun blankDocument() =
+            DesignDocument(width = 1080, height = 1080, backgroundArgb = 0xFFFFFFFF.toInt())
+
+        fun defaultName(): String {
+            val stamp = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US).format(Date())
+            return "Design $stamp"
+        }
     }
 }
