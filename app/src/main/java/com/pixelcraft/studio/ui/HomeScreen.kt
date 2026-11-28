@@ -86,6 +86,7 @@ fun HomeScreen(
     onOpenDocument: (PixelCanvasDocument) -> Unit,
     onOpenSettings: () -> Unit,
     onOpenPhotoEditor: () -> Unit = {},
+    onOpenDesignStudio: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
@@ -179,6 +180,27 @@ fun HomeScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(R.string.photo_editor_entry),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+
+                // Design Studio entry
+                item {
+                    OutlinedButton(
+                        onClick = onOpenDesignStudio,
+                        modifier = Modifier.fillMaxWidth(),
+                        shape = RoundedCornerShape(12.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Filled.Brush,
+                            contentDescription = null,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.design_studio_entry),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
