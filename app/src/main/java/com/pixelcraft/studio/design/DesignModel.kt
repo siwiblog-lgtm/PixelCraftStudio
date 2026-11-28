@@ -1,5 +1,7 @@
 package com.pixelcraft.studio.design
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.cos
@@ -8,11 +10,16 @@ import kotlin.math.sin
 enum class ShapeKind { RECTANGLE, ELLIPSE, LINE }
 
 /** What a layer draws. Pure data, so documents are cheap to copy and save. */
+@Serializable
 sealed interface LayerContent {
 
     /** A photo stored outside the document and referenced by [sourceId]. */
+    @Serializable
+    @SerialName("image")
     data class Image(val sourceId: String) : LayerContent
 
+    @Serializable
+    @SerialName("text")
     data class Text(
         val text: String,
         val sizePx: Float = 64f,
@@ -20,6 +27,8 @@ sealed interface LayerContent {
         val bold: Boolean = false
     ) : LayerContent
 
+    @Serializable
+    @SerialName("shape")
     data class Shape(
         val kind: ShapeKind,
         val fillArgb: Int = 0xFF6366F1.toInt(),
@@ -32,6 +41,7 @@ sealed interface LayerContent {
  * Position and size of a layer in canvas pixels. The anchor is the layer
  * centre, so scaling and rotating keep the layer in place.
  */
+@Serializable
 data class LayerTransform(
     val centerX: Float,
     val centerY: Float,
@@ -68,6 +78,7 @@ data class LayerTransform(
     }
 }
 
+@Serializable
 data class Layer(
     val id: String,
     val name: String,
@@ -79,6 +90,7 @@ data class Layer(
 )
 
 /** Layers are ordered from bottom (index 0) to top. Background 0 = transparent. */
+@Serializable
 data class DesignDocument(
     val width: Int,
     val height: Int,
