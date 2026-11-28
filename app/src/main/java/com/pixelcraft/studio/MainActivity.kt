@@ -22,6 +22,7 @@ import com.pixelcraft.studio.core.debug.CrashReportDialog
 import com.pixelcraft.studio.core.debug.CrashReporter
 import com.pixelcraft.studio.core.theme.PixelCraftTheme
 import com.pixelcraft.studio.data.LocalStorageManager
+import com.pixelcraft.studio.design.DesignScreen
 import com.pixelcraft.studio.model.PixelCanvasDocument
 import com.pixelcraft.studio.photo.PhotoEditorScreen
 import com.pixelcraft.studio.ui.screens.EditorScreen
@@ -33,6 +34,7 @@ private enum class AppRoute {
     HOME,
     EDITOR,
     PHOTO,
+    DESIGN,
     SETTINGS
 }
 
@@ -106,6 +108,9 @@ private fun PixelCraftApp(
                         },
                         onOpenPhotoEditor = {
                             currentRoute = AppRoute.PHOTO
+                        },
+                        onOpenDesignStudio = {
+                            currentRoute = AppRoute.DESIGN
                         }
                     )
                 }
@@ -131,6 +136,15 @@ private fun PixelCraftApp(
 
                 AppRoute.PHOTO -> {
                     PhotoEditorScreen(
+                        isRtl = isRtl,
+                        onNavigateBack = {
+                            currentRoute = AppRoute.HOME
+                        }
+                    )
+                }
+
+                AppRoute.DESIGN -> {
+                    DesignScreen(
                         isRtl = isRtl,
                         onNavigateBack = {
                             currentRoute = AppRoute.HOME
